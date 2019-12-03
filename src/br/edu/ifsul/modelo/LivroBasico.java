@@ -67,12 +67,12 @@ public class LivroBasico implements Serializable{
 //    private Autor autor;
     
      @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "tb_livroautor", joinColumns = @JoinColumn(name = "livrobasico",
-    referencedColumnName = "ISBN", nullable = false), inverseJoinColumns = @JoinColumn(name = "autor", referencedColumnName = "id", nullable = false))
+    @JoinTable(name = "tb_livroautor", 
+            joinColumns = 
+                    @JoinColumn(name = "livrobasico", referencedColumnName = "isbn", nullable = false), 
+            inverseJoinColumns = 
+                    @JoinColumn(name = "autor", referencedColumnName = "id", nullable = false))
     private Set<Autor> livroautor = new HashSet<>();  
-
-
-
 
         public LivroBasico(){
         

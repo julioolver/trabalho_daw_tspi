@@ -6,11 +6,17 @@
 package br.edu.ifsul.modelo;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import org.hibernate.validator.constraints.Length;
@@ -41,10 +47,12 @@ public class Autor implements Serializable{
     private String bibliografia;
 
     
-    //    @ManyToMany(fetch = FetchType.LAZY)
-//    @JoinTable(name = "tb_livroautor", joinColumns = @JoinColumn(name = "autor",
-//    referencedColumnName = "id", nullable = false), inverseJoinColumns = @JoinColumn(name = "livrobasico", referencedColumnName = "ISBN", nullable = false))
-//    private Set<LivroBasico> autorlivro = new HashSet<>();
+        @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "tb_livroautor", 
+            joinColumns = 
+                    @JoinColumn(name = "autor", referencedColumnName = "id", nullable = false), 
+            inverseJoinColumns = @JoinColumn(name = "livrobasico", referencedColumnName = "isbn", nullable = false))
+    private Set<LivroBasico> autorlivro = new HashSet<>();
     /**
      * @return the id
      */

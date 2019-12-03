@@ -6,13 +6,21 @@
 package br.edu.ifsul.modelo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -40,6 +48,10 @@ public class Livraria implements Serializable{
     @Length(max = 60, message = "O site não pode ter mais que {max} caracteres")
     @Column(name = "site", nullable = false, length = 60)
     private String site;
+        
+    @OneToMany(mappedBy = "livraria", cascade = CascadeType.ALL,
+            orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Catalogo> catalogos = new ArrayList<>();
 
     /**
      * @return the id
@@ -51,6 +63,16 @@ public class Livraria implements Serializable{
     public Integer getId() {
         return id;
     }
+    
+     public void adicionarCatalogo(Catalogo obj){
+        obj.setLivraria(this);
+        this.catalogos.add(obj);
+    }
+    
+    public void removerCatalogo(int index){
+        this.catalogos.remove(index);
+    }
+    
 
     /**
      * @param id the id to set
@@ -85,5 +107,13 @@ public class Livraria implements Serializable{
      */
     public void setSite(String site) {
         this.site = site;
+    }
+    
+    public List<Catalogo> getCatalogos() {
+        return catalogos;
+    }
+
+    public void setCatalogos(List<Catalogo> enderecos) {
+        this.catalogos = catalogos;
     }
 }
